@@ -13,13 +13,13 @@ from dash.dependencies import Input, Output
 
 
 # Lecture du fichier CSV
-df = pd.read_csv('C:/Users/gusta/OneDrive/Bureau/valeur.csv', header=None, names=['date', 'time', 'price'], delimiter=';', decimal='.')
+df = pd.read_csv('/home/gustave/output.csv', header=None, names=['date', 'time', 'price'], delimiter=';', decimal='.')
 
 # Concaténation de la colonne date et de la colonne time pour créer une colonne datetime
 df['datetime'] = pd.to_datetime(df['date'] + ' ' + df['time'], format='%d/%m/%Y %H:%M:%S')
 
 # Conversion de la colonne price en float
-df['price'] = df['price'].astype(float)
+df['price'] = df['price'].str.replace('$', '').astype(float)
 
 # Création de la time series
 ts = pd.Series(df['price'].values, index=df['datetime'])

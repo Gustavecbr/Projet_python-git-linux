@@ -19,7 +19,7 @@ df = pd.read_csv('/home/gustave/output.csv', header=None, names=['date', 'time',
 df['datetime'] = pd.to_datetime(df['date'] + ' ' + df['time'], format='%d/%m/%Y %H:%M:%S')
 
 # Conversion de la colonne price en float
-df['price'] = df['price'].str.replace('$', '').astype(float)
+df['price'] = df['price'].str.replace('$', '', regex=False).astype(float)
 
 # Création de la time series
 ts = pd.Series(df['price'].values, index=df['datetime'])

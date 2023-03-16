@@ -2,11 +2,13 @@ import pandas as pd
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-from dash.dependencies import Input, Output
+import dash_core_components as dcc
 import plotly.graph_objs as go
-
+import dash.dependencies as dd
+Input = dd.Input
+Output = dd.Output
 # Charger les données
-df = pd.read_csv('/home/ec2-user/valeur.csv', header=None, names=['date', 'time', 'price'], delimiter=';', decimal='.')
+df = pd.read_csv('C:/Users/gusta/OneDrive/Bureau/valeur.csv', header=None, names=['date', 'time', 'price'], delimiter=';', decimal='.')
 df['datetime'] = pd.to_datetime(df['date'] + ' ' + df['time'], format='%d/%m/%Y %H:%M:%S')
 df['price'] = df['price'].str.replace('$', '', regex=False).astype(float)
 df['price'] = df['price'].fillna(method='ffill')
@@ -130,4 +132,4 @@ def update_graph(start_date, end_date):
 
 
 if __name__ == '__main__':
-    app.run_server(host="0.0.0.0",debug=True)
+    app.run_server(debug=True)

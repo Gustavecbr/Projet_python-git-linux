@@ -8,7 +8,7 @@ import dash.dependencies as dd
 Input = dd.Input
 Output = dd.Output
 # Charger les données
-df = pd.read_csv('C:/Users/gusta/OneDrive/Bureau/valeur.csv', header=None, names=['date', 'time', 'price'], delimiter=';', decimal='.')
+df = pd.read_csv('/home/ec2-user/Projet_python-git-linux/valeur.sh', header=None, names=['date', 'time', 'price'], delimiter=';', decimal='.')
 df['datetime'] = pd.to_datetime(df['date'] + ' ' + df['time'], format='%d/%m/%Y %H:%M:%S')
 df['price'] = df['price'].str.replace('$', '', regex=False).astype(float)
 df['price'] = df['price'].fillna(method='ffill')

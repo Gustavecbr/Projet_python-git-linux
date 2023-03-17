@@ -132,4 +132,4 @@ def update_graph(start_date, end_date):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(host='54.88.50.122',debug=True)

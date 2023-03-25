@@ -115,13 +115,13 @@ app.layout = html.Div(children=[
 
 # Mettre à jour le graphique en fonction de la plage de dates sélectionnée
 @app.callback(
-    Output('graph', 'figure'),
-    Output('daily_return', 'children'),
-    Output('volatility', 'children'),
-    Output('mean_price', 'children'),
-    Output('actual_price', 'children'),
-    Input('date-picker-range', 'start_date'),
-    Input('date-picker-range', 'end_date')
+    [Output('graph', 'figure'),
+     Output('daily_return', 'children'),
+     Output('volatility', 'children'),
+     Output('mean_price', 'children'),
+     Output('actual_price', 'children')],
+    [Input('date-picker-range', 'start_date'),
+     Input('date-picker-range', 'end_date')]
 )
 
 def update_graph(start_date, end_date):
@@ -132,9 +132,9 @@ def update_graph(start_date, end_date):
     daily_return = round((filtered_ts.iloc[-1] - filtered_ts.iloc[0]) / filtered_ts.iloc[0] * 100, 2)
     current_price = '${:,.2f}'.format(round(filtered_ts.iloc[-1], 2))
 
-    return {
+    figure = {
         'data': [
-            {'x': filtered_ts.index, 'y': filtered_ts.values, 'type': 'line', 'name': 'Prix', 'line' : {'color': get_color(ts)} }
+            {'x': filtered_ts.index, 'y': filtered_ts.values, 'type': 'line', 'name': 'Prix', 'line': {'color': get_color(filtered_ts["variation"])}}
         ],
         'layout': go.Layout(
             title='Gate Token',
@@ -143,14 +143,10 @@ def update_graph(start_date, end_date):
             font=dict(color='white'),
             xaxis=dict(title='Time', titlefont=dict(color='white')),
             yaxis=dict(title='Price', titlefont=dict(color='white')),
-        ),
-        'volatility': volatility,
-        'mean_price': mean_price,
-        'daily_return': daily_return,
-        'current_price': current_price
-        
-
+        )
     }
+    return figure, '{:.2f}%'.format(daily_return), f'{volatility}%', mean_price, current_price
+
 
 if __name__ == "__main__":
         app.run_server(host="0.0.0.0",port=8050)

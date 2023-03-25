@@ -134,7 +134,7 @@ def update_graph(start_date, end_date):
 
     figure = {
         'data': [
-            {'x': filtered_ts.index, 'y': filtered_ts.values, 'type': 'line', 'name': 'Prix', 'line': {'color': get_color(filtered_ts["variation"])}}
+            {'x': filtered_ts.index, 'y': filtered_ts.values, 'type': 'line', 'name': 'Prix', 'line': {'color': get_color(filtered_ts)}}
         ],
         'layout': go.Layout(
             title='Gate Token',
